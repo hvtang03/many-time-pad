@@ -1,0 +1,30 @@
+1. Nguyên tắc giải mã : 
+Với a và b là các bản rõ, xa và xb là các bản mã, ta có a xor b = xa xor xb.
+Thật vậy để chứng minh ta có: giả sử ta có khóa k khi đó
+a xor k = xa
+b xor k = xb
+=> xa xor xb = a xor k xor b xor k = a xor b xor 0 = a xor b
+-  Khi xor khoảng trắng với một chữ cái, ta được kết quả là chữ cái đó sẽ được up case (hoặc low 
+case). Còn nếu xor 2 khoảng trắng với nhau ta sẽ ra 0.(chỉ quan tâm đến chữ cái và khoảng trắng vì 
+tần suất xuất hiện lớn và mọi ký tự khác xor với chữ cái đều không tạo ra được chữ cái)
+ Ta có cách giải mã khóa như sau : xor lần lượt từng cipher text với nhau, đối với từng vị trí (8 bit 
+tương đương với 2 ký tự hex) mà kết quả là một chữ cái hoặc số 0 khi đó ta biết một trong hai cipher 
+text  đó có một cái là mã hóa của space tính khả năng xuất hiện space đối với từng cipher text, lấy cái 
+cao nhất rồi suy ngược ra khóa. Sau khi có key ta đem xor với cipher text (cipher text11) sẽ ra được 
+message. 
+
+2. Thuật toán : 
+1. Đọc cipher text từ file  lưu vào mảng  lines
+2. Xor lần lượt từng cipher text với nhau (không lặp lại). Giả sử cipher text là i,j. Nếu kết quả của 
+phép xor là một chữ cái (‘a’ -> ‘z’ hoặc ‘A’ -> ‘Z’) hoặc 0 thì tăng is_space[i][vị trí], spaceOccur[j]
+[vị trí] lên một đơn vị. 
+3. Sinh key : Giả sử cho key có độ dài bằng cipher text dài nhất. Với mỗi vị trí, tìm cipher text sao 
+cho is_space của cipher text lớn nhất tại vị trí đó. Ta tìm được cipher text(max_index) mà tại vị trí  đó
+có khả năng là mã hóa dấu space nhất khi này để tìm key tại vị trí này chỉ cần lấy 
+cipher_text[max_index][vị trí] xor 32 
+4. sau khi tìm được khóa (khóa dài nhất có thể) thì lấy khóa xor với cipher text 11 thì ra được 
+message cần tìm
+5. lưu ý khóa tìm được sẽ không đúng 100% (do các ký tự đặc biệt) nên cần sửa lại khóa sau khi đã 
+đoán được message cho đúng.
+
+Nguồn tham khảo: https://www.studocu.com/vn/document/truong-dai-hoc-bach-khoa-ha-noi/an-toan-thong-tin/many-time-pad-sdfsdfds/85587256.

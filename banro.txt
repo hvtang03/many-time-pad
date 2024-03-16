@@ -1,0 +1,4 @@
+_h__s_cue_ me__age___: Wh___us__g __str_am c_pher, _ev____se th__k_y _ore_than_on__
+The secret message is: "What you using stream cipher, never use the key more than once.
+
+
